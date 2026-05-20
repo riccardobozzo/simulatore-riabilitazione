@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulatore Esame · Riabilitazione Strutturale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">§</span>
+    <div class="brand-text">
+      <div class="brand-line">SIMULATORE</div>
+      <div class="brand-line accent">D'ESAME</div>
+    </div>
+  </div>
+  <div class="topbar-meta">
+    <span class="meta-item">eCampus</span>
+    <span class="meta-divider">·</span>
+    <span class="meta-item">Ing. Civile</span>
+  </div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="screen active">
+  <div class="container">
+    <div class="hero">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        <span>Preparazione all'esame</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="title-row">Riabilitazione</span>
+        <span class="title-row italic"><span class="underline-stroke">strutturale</span></span>
+      </h1>
+      <p class="hero-sub">
+        209 domande chiuse · 52 lezioni · Prof. Focacci<br>
+        Simulazione con correzione istantanea e spiegazione di ogni risposta.
+      </p>
+    </div>
+
+    <div class="modes">
+      <h2 class="section-h">Scegli la modalità</h2>
+      <div class="mode-grid">
+
+        <button class="mode-card" data-mode="quick">
+          <div class="mode-num">01</div>
+          <div class="mode-title">Test rapido</div>
+          <div class="mode-desc">10 domande estratte casualmente da tutte le lezioni. Ideale per ripasso veloce.</div>
+          <div class="mode-arrow">→</div>
+        </button>
+
+        <button class="mode-card" data-mode="exam">
+          <div class="mode-num">02</div>
+          <div class="mode-title">Esame completo</div>
+          <div class="mode-desc">30 domande casuali simulano la prova d'esame. Cronometro attivo (45 min).</div>
+          <div class="mode-arrow">→</div>
+        </button>
+
+        <button class="mode-card" data-mode="lesson">
+          <div class="mode-num">03</div>
+          <div class="mode-title">Per lezione</div>
+          <div class="mode-desc">Allenati su una specifica lezione. Tutte le domande nell'ordine del PDF.</div>
+          <div class="mode-arrow">→</div>
+        </button>
+
+        <button class="mode-card" data-mode="all">
+          <div class="mode-num">04</div>
+          <div class="mode-title">Tutte le domande</div>
+          <div class="mode-desc">Sfoglia l'intera raccolta in modalità studio, con correzione immediata.</div>
+          <div class="mode-arrow">→</div>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="stats" id="stats">
+      <div class="stat">
+        <div class="stat-num" id="stat-attempts">—</div>
+        <div class="stat-label">Test completati</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-best">—</div>
+        <div class="stat-label">Miglior punteggio</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-avg">—</div>
+        <div class="stat-label">Media</div>
+      </div>
+      <button class="stat-reset" id="stat-reset">azzera statistiche</button>
+    </div>
+  </div>
+</section>
+
+<!-- LESSON PICKER -->
+<section id="lesson-picker" class="screen">
+  <div class="container">
+    <button class="back-btn" data-back>← indietro</button>
+    <h2 class="section-h">Scegli una lezione</h2>
+    <div class="lesson-list" id="lesson-list"></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="screen">
+  <div class="container">
+    <div class="quiz-header">
+      <button class="back-btn" id="quiz-back">× esci dal test</button>
+      <div class="quiz-meta">
+        <span id="quiz-progress" class="progress-text">1 / 10</span>
+        <span class="meta-divider">·</span>
+        <span id="quiz-timer" class="timer">00:00</span>
+      </div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-tag" id="q-lesson">Lezione</div>
+      <span class="verify-badge" id="q-verify" style="display:none" title="La risposta dipende da dettagli della figura: verifica sul materiale del corso">⚠ da verificare</span>
+      <div class="question-text" id="q-text"></div>
+      <div class="q-figure" id="q-figure" style="display:none"></div>
+      <div class="options" id="q-options"></div>
+      <div class="feedback" id="q-feedback"></div>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="btn-secondary" id="btn-skip">salta</button>
+      <button class="btn-primary" id="btn-next">avanti →</button>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results" class="screen">
+  <div class="container">
+    <div class="result-hero">
+      <div class="result-score-label">Punteggio finale</div>
+      <div class="result-score" id="result-score">0 / 0</div>
+      <div class="result-percent" id="result-percent">0%</div>
+      <div class="result-judgment" id="result-judgment"></div>
+    </div>
+
+    <div class="result-meta">
+      <div class="rm-item">
+        <div class="rm-label">Tempo</div>
+        <div class="rm-value" id="result-time">00:00</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-label">Corrette</div>
+        <div class="rm-value" id="result-correct">0</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-label">Errate</div>
+        <div class="rm-value" id="result-wrong">0</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-label">Saltate</div>
+        <div class="rm-value" id="result-skipped">0</div>
+      </div>
+    </div>
+
+    <div class="review">
+      <h3 class="section-h">Revisione</h3>
+      <div id="review-list"></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn-secondary" id="btn-retry">↻ riprova</button>
+      <button class="btn-primary" id="btn-home">torna alla home</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>Materiale didattico · eCampus · Prof. Francesco Focacci</div>
+  <div class="footer-note">Domande dal set ufficiale del corso · risposte risolte per via tecnica (possibili imprecisioni).</div>
+</footer>
+
+<script src="domande-riabilitazione.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
